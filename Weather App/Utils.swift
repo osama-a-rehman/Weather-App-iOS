@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias DownloadComplete = () -> ()
+
 class Utils {
     public static let BASE_URL = "http://samples.openweathermap.org/data/2.5/"
     public static let URL_TYPE = "weather?"

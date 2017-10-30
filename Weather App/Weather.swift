@@ -20,6 +20,12 @@ class Weather {
             _date = ""
         }
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .none
+        
+        let currentDate = dateFormatter.string(from: Date())
+        self._date = "Today, \(currentDate)"
         return _date
     }
     
@@ -47,7 +53,7 @@ class Weather {
         return _weatherType
     }
     
-    func downloadWeatherData(){
+    func downloadWeatherData(completed: @escaping DownloadComplete){
         Alamofire.request(Utils.DEMO_WEATHER_URL).responseJSON { response in
     
             if let rootObj = response.result.value as? Dictionary<String, AnyObject> {
@@ -63,16 +69,18 @@ class Weather {
                 
                 if let main = rootObj["main"] as? Dictionary<String, AnyObject> {
                     if let temp = main["temp"] as? Double {
-                        self._temperature = temp
-                        /*print("Type: \(self._weatherType), Temp: \(self._temperature), City: \(self._city)")*/
+                        var celsius = temp - 273
+                        celsius = Double(round(100 * celsius)/100)
+                        
+                        self._temperature = celsius
+                        
                     }
                 }
             }
+            
+            print("Type: \(self.weatherType), Temp: \(self.temperature), City: \(self.city)")
+            completed()
         }
-        
-        // Call completed()
-        
-        print("Type: \(_weatherType), Temp: \(_temperature), City: \(_city)")
     }
     
 }
