@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--MainVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainVC" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -150,6 +150,14 @@
                             <constraint firstAttribute="trailing" secondItem="tn4-aD-Elx" secondAttribute="trailing" id="pg0-S4-K3A"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cityLabel" destination="cf7-7M-F6O" id="REe-zb-Af4"/>
+                        <outlet property="dateLabel" destination="49h-FV-Pu5" id="Fqa-vO-PqO"/>
+                        <outlet property="temperatureLabel" destination="1yk-we-7qy" id="11J-et-hXv"/>
+                        <outlet property="weatherForecastTableView" destination="tn4-aD-Elx" id="szL-n2-pBB"/>
+                        <outlet property="weatherImage" destination="7Wo-tg-lKV" id="AAD-Eb-Qkb"/>
+                        <outlet property="weatherTypeLabel" destination="0MN-cp-FVu" id="IZi-SC-L2x"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

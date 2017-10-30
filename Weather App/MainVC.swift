@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainVC.swift
 //  Weather App
 //
 //  Created by Osama Mac on 10/30/17.
@@ -9,8 +9,18 @@
 import UIKit
 //import Alamofire
 
-class ViewController: UIViewController {
+class MainVC: UIViewController {
+    
+    var weather: Weather!
 
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var weatherImage: UIImageView!
+    @IBOutlet weak var weatherTypeLabel: UILabel!
+    
+    @IBOutlet weak var weatherForecastTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -22,6 +32,10 @@ class ViewController: UIViewController {
             print(response.result.value)
         
         }*/
+        
+        weather = Weather()
+        
+        weather.downloadWeatherData()
     }
 
     override func didReceiveMemoryWarning() {
