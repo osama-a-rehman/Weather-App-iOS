@@ -11,13 +11,19 @@ import Foundation
 typealias DownloadComplete = () -> ()
 
 class Utils {
-    public static let BASE_URL = "http://samples.openweathermap.org/data/2.5/"
-    public static let URL_TYPE = "weather?"
-    public static let LATITUDE = "lat="
-    public static let LONGITUDE = "&lon="
-    public static let APP_ID = "&appid="
-    public static let API_KEY = "7635bed1828db2af91c7b9c91cc11f69"
+    public static let BASE_URL = "https://api.apixu.com/v1/"
+    public static let URL_TYPE_CURRENT = "current.json?"
+    public static let URL_TYPE_FORECAST = "forecast.json?"
+    public static let APP_ID = "key="
+    public static let QUERY = "&q="
+    public static let DAYS = "&days="
     
-    public static let DEMO_WEATHER_URL = "http://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=7635bed1828db2af91c7b9c91cc11f69"
+    // APIXU.com
+    public static let API_KEY = "31627029231141f6997182643170111"
     
+    public static let DEMO_WEATHER_URL = "\(BASE_URL)\(URL_TYPE_CURRENT)\(APP_ID)\(API_KEY)\(QUERY)55,%2022"
+    
+    public static let DEMO_FORECAST_URL = "\(BASE_URL)\(URL_TYPE_FORECAST)\(APP_ID)\(API_KEY)\(QUERY)55,%2022\(DAYS)7"
+    
+    // My Location 24.820834, 66.983454
 }

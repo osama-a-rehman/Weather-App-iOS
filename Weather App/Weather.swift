@@ -56,7 +56,7 @@ class Weather {
     func downloadWeatherData(completed: @escaping DownloadComplete){
         Alamofire.request(Utils.DEMO_WEATHER_URL).responseJSON { response in
     
-            if let rootObj = response.result.value as? Dictionary<String, AnyObject> {
+            /*if let rootObj = response.result.value as? Dictionary<String, AnyObject> {
                 if let weatherArray = rootObj["weather"] as? [Dictionary<String, AnyObject>] {
                     if let main = weatherArray[0]["main"] as? String {
                         self._weatherType = main
@@ -76,9 +76,40 @@ class Weather {
                         
                     }
                 }
+            }*/
+            
+            if let rootObj = response.result.value as? Dictionary<String, AnyObject> {
+                
+                if let location = rootObj["location"] as? Dictionary<String, AnyObject> {
+                    if let tz_id = location["tz_id"] as? String {
+                        self._city = tz_id.components(separatedBy: "/")[1]
+                    }
+                
+                }
+
+                
+                if let current = rootObj["current"] as? Dictionary<String, AnyObject> {
+                    if let temp = current["temp_c"] as? Double {
+                        var celsius = temp
+                        celsius = Double(round(100 * celsius)/100)
+                        
+                        self._temperature = celsius
+                    }
+                    
+                    if let condition = current["condition"] as? Dictionary<String, AnyObject> {
+                        if let type = condition["text"] as? String {
+                            self._weatherType = type
+                        }
+                    }
+                }
             }
             
-            print("Type: \(self.weatherType), Temp: \(self.temperature), City: \(self.city)")
+            if let error = response.error {
+                print(error)
+            }
+            
+            print("Type: \(self.weatherType), Temp: \(self.temperature), City: \(self.city), Date: \(self.date)")
+            
             completed()
         }
     }

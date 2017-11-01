@@ -73,10 +73,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeatherCell" rowHeight="81" id="fHw-gA-XKe" customClass="WeatherForecastCell" customModule="Weather_App" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="81"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fHw-gA-XKe" id="x9M-YV-S4k">
-                                            <frame key="frameInset" width="320" height="80.5"/>
+                                            <frame key="frameInset" width="375" height="80.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hz4-il-396">
@@ -134,6 +134,13 @@
                                                 <constraint firstItem="zcO-Rk-igS" firstAttribute="top" secondItem="x9M-YV-S4k" secondAttribute="topMargin" id="yzG-rt-QBD"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="forecastDaylabel" destination="rGo-xU-02L" id="SZv-Hq-YYX"/>
+                                            <outlet property="forecastImage" destination="Hz4-il-396" id="uxp-3x-OYU"/>
+                                            <outlet property="forecastMaxTempLabel" destination="OR8-ex-b4X" id="FKM-JP-m61"/>
+                                            <outlet property="forecastMinTempLabel" destination="gWo-WY-eA6" id="akF-th-Lc2"/>
+                                            <outlet property="forecastWeatherTypeLabel" destination="Ma0-Vi-M7W" id="gL2-o0-t34"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
