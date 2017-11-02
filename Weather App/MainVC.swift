@@ -36,19 +36,10 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLo
         weatherForecastTableView.delegate = self
         
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        /*locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startMonitoringSignificantLocationChanges()
+        locationManager.startMonitoringSignificantLocationChanges()*/
         
-        weather.downloadWeatherData {
-            self.updateUI()
-            
-            self.downloadWeatherForecastData {
-                self.forecastArray.removeFirst()
-                
-                self.weatherForecastTableView.reloadData()
-            }
-        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -135,15 +126,51 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLo
         }
     }
     
-    func locationAuthStatus(){
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            currentLocation = locationManager.location
-        }else{
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
-            locationManager.startMonitoringSignificantLocationChanges()
+            
+        case .authorizedAlways, .authorizedWhenInUse:
+            // Do your thing here
+            
+            currentLocation = locationManager.location
+            
+            Utils.latitude = currentLocation.coordinate.latitude
+            Utils.longitude = currentLocation.coordinate.longitude
+            
+            Utils.DEMO_WEATHER_URL = "\(Utils.BASE_URL)\(Utils.URL_TYPE_CURRENT)\(Utils.APP_ID)\(Utils.API_KEY)\(Utils.QUERY)\(Utils.latitude!),%20\(Utils.longitude!)"
+            
+            Utils.DEMO_FORECAST_URL = "\(Utils.BASE_URL)\(Utils.URL_TYPE_FORECAST)\(Utils.APP_ID)\(Utils.API_KEY)\(Utils.QUERY)\(Utils.latitude!),%20\(Utils.longitude!)\(Utils.DAYS)\(Utils.NUM_OF_DAYS)"
+            
+            print("Utils.DEMO_WEATHER_URL: \(Utils.DEMO_WEATHER_URL)")
+            print("Utils.DEMO_FORECAST_URL: \(Utils.DEMO_FORECAST_URL)")
+            
+            weather.downloadWeatherData {
+                self.updateUI()
+            
+                self.downloadWeatherForecastData {
+                    self.forecastArray.removeFirst()
+                
+                    self.weatherForecastTableView.reloadData()
+                }
+            }
+            
+        case .denied:
+            // Permission denied, do something else
+            locationManager.requestWhenInUseAuthorization()
+            
+        default: break
         }
     }
-
+    
+    /*func locationAuthStatus(){
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            
+        }else{
+            locationManager.requestWhenInUseAuthorization()
+            //locationAuthStatus()
+        }
+    }*/
 }
 
