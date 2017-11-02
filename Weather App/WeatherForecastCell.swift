@@ -22,6 +22,6 @@ class WeatherForecastCell: UITableViewCell {
         forecastWeatherTypeLabel.text = forecast.weatherType
         forecastMinTempLabel.text = "\(forecast.minTemp)°C"
         
-        forecastImage.image = UIImage(named: forecast.weatherType)        
+        forecastImage.image = forecast.weatherImage
     }
 }

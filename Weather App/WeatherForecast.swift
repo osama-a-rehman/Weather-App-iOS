@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import Alamofire
 
 class WeatherForecast{
@@ -14,6 +15,7 @@ class WeatherForecast{
     private var _weatherType: String!
     private var _minTemp: Double!
     private var _maxTemp: Double!
+    private var _weatherImage: UIImage!
     
     var day: String {
         if _day == nil {
@@ -47,6 +49,14 @@ class WeatherForecast{
         return _maxTemp
     }
     
+    var weatherImage: UIImage {
+        if _weatherImage == nil {
+            _weatherImage = UIImage()
+        }
+        
+        return _weatherImage
+    }
+    
     init(forecastItem: Dictionary<String, AnyObject>) {
         // APUXI
         
@@ -78,6 +88,24 @@ class WeatherForecast{
             if let condition = day["condition"] as? Dictionary<String, AnyObject> {
                 if let type = condition["text"] as? String {
                     self._weatherType = type
+                }
+                
+                if let icon = condition["icon"] as? String {
+                    let iconStringURL = "https:\(icon)"
+                    let iconURL = URL(string: iconStringURL)!
+                    
+                    do{
+                        let data = try Data(contentsOf: iconURL)
+                        
+                        self._weatherImage = UIImage(data: data)
+                        
+                    } catch let err as NSError {
+                        print("Debug Description: \(err.debugDescription)")
+                    }
+                    
+                    print("ICON URL: \(iconURL)")
+                }else{
+                    print("Error ICON")
                 }
             }
         }

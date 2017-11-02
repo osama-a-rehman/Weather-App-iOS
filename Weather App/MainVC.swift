@@ -8,8 +8,9 @@
 
 import UIKit
 import Alamofire
+import CoreLocation
 
-class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     var weather: Weather!
 
@@ -22,20 +23,29 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var weatherForecastTableView: UITableView!
     
     var forecastArray: [WeatherForecast]!
+    var currentLocation: CLLocation!
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         weather = Weather()
         forecastArray = [WeatherForecast]()
-
+        
         weatherForecastTableView.dataSource = self
         weatherForecastTableView.delegate = self
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startMonitoringSignificantLocationChanges()
         
         weather.downloadWeatherData {
             self.updateUI()
             
             self.downloadWeatherForecastData {
+                self.forecastArray.removeFirst()
+                
                 self.weatherForecastTableView.reloadData()
             }
         }
@@ -71,7 +81,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cityLabel.text = weather.city
         weatherTypeLabel.text = weather.weatherType
         
-        weatherImage.image = UIImage(named: weather.weatherType)
+        weatherImage.image = weather.weatherImage
     }
     
     func downloadWeatherForecastData(completed: @escaping DownloadComplete){
@@ -122,6 +132,16 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             //print("Type: \(self.weatherType), Min-Temp: \(self._minTemp), Max-Temp: \(self.maxTemp), Day: \(self.day)")
             
             completed()
+        }
+    }
+    
+    func locationAuthStatus(){
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            currentLocation = locationManager.location
+        }else{
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startMonitoringSignificantLocationChanges()
         }
     }
 

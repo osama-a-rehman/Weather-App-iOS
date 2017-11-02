@@ -23,7 +23,7 @@ class Utils {
     
     public static let DEMO_WEATHER_URL = "\(BASE_URL)\(URL_TYPE_CURRENT)\(APP_ID)\(API_KEY)\(QUERY)55,%2022"
     
-    public static let DEMO_FORECAST_URL = "\(BASE_URL)\(URL_TYPE_FORECAST)\(APP_ID)\(API_KEY)\(QUERY)55,%2022\(DAYS)7"
+    public static let DEMO_FORECAST_URL = "\(BASE_URL)\(URL_TYPE_FORECAST)\(APP_ID)\(API_KEY)\(QUERY)55,%2022\(DAYS)8"
     
     // My Location 24.820834, 66.983454
 }
